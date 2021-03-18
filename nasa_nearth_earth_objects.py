@@ -24,7 +24,7 @@ date = date.today()  # today's date to pass into path
 
 for neo in data['near_earth_objects']:  # iterate through list of near earth objects
 
-    near_earth_object = data['near_earth_objects'][str(date)][0]  # Location of first near earth object on specified day
+    near_earth_object = data['near_earth_objects'][str(date)][0]  # location of first near earth object on specified day
 
     # naming and hazard info
     neo_id = near_earth_object['id']
