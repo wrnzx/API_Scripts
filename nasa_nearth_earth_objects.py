@@ -9,7 +9,7 @@ from datetime import date, timedelta
 def get_response():  # function to get and returns JSON response from NASA
 
     # API data
-    api_key = ' '  # enter your API Key here. Available from: https://api.nasa.gov/
+    api_key = ''  # enter your API Key here. Available from: https://api.nasa.gov/
 
     api_url = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=' + date.today().strftime(
         '%Y-%m-%d') + '&api_key=' + api_key
@@ -19,41 +19,44 @@ def get_response():  # function to get and returns JSON response from NASA
     return response
 
 
-data = get_response()  # returns API Response in JSON format
-date = date.today()  # today's date to pass into path
+def display_data(data):
 
-for neo in data['near_earth_objects']:  # iterate through list of near earth objects
+    add_date = date.today()  # today's date to pass into path
 
-    near_earth_object = data['near_earth_objects'][str(date)][0]  # location of first near earth object on specified day
+    for neo in data['near_earth_objects']:  # iterate through list of near earth objects
 
-    # naming and hazard info
-    neo_id = near_earth_object['id']
-    neo_name = near_earth_object['name']
-    jpl_url = near_earth_object['nasa_jpl_url']
+        near_earth_object = data['near_earth_objects'][str(add_date)][0]  # location of first near earth object on specified day
 
-    # convert hazard bool to yes or no
-    if near_earth_object['is_potentially_hazardous_asteroid']:
-        potential_hazard = 'Yes'
-    else:
-        potential_hazard = 'No'
+        # naming and hazard info
+        neo_id = near_earth_object['id']
+        neo_name = near_earth_object['name']
+        jpl_url = near_earth_object['nasa_jpl_url']
 
-    # estimated diameter and approach date
-    estimated_diameter = round(near_earth_object['estimated_diameter']['feet']['estimated_diameter_max'])
-    estimated_approach_date = near_earth_object['close_approach_data'][0]['close_approach_date_full']
-    relative_velocity = float(near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
+        # convert hazard bool to yes or no
+        if near_earth_object['is_potentially_hazardous_asteroid']:
+            potential_hazard = 'Yes'
+        else:
+            potential_hazard = 'No'
 
-    # print out data
-    print('')
-    print('_____________________________________________________________DATA_BY_NASA_API_____')
-    print('')
-    print('Object Name:', neo_name)
-    print('Object ID:', neo_id)
-    print('Potentially hazardous?:', potential_hazard)
-    print('Estimated Diameter:', "{:,}".format(estimated_diameter), 'feet')
-    print('Estimated Approach Date and Time:', estimated_approach_date)
-    print('Relative Velocity is', "{:,}".format(math.floor(relative_velocity)), "Kilometers/Hour")
-    print('NASA Jet Propulsion Lab Url:', jpl_url)
-    print('__________________________________________________________________________________')
+        # estimated diameter and approach date
+        estimated_diameter = round(near_earth_object['estimated_diameter']['feet']['estimated_diameter_max'])
+        estimated_approach_date = near_earth_object['close_approach_data'][0]['close_approach_date_full']
+        relative_velocity = float(near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
+        add_date = add_date + timedelta(days=1)  # advance date by 1 to print next day in week
 
-    date = date + timedelta(days=1)  # advance date by 1 to print next day in week
+        # print out data
+        print('')
+        print('_____________________________________________________________DATA_BY_NASA_API_____')
+        print('')
+        print('Object Name:', neo_name)
+        print('Object ID:', neo_id)
+        print('Potentially hazardous?:', potential_hazard)
+        print('Estimated Diameter:', "{:,}".format(estimated_diameter), 'feet')
+        print('Estimated Approach Date and Time:', estimated_approach_date)
+        print('Relative Velocity is', "{:,}".format(math.floor(relative_velocity)), "Kilometers/Hour")
+        print('NASA Jet Propulsion Lab Url:', jpl_url)
+        print('__________________________________________________________________________________')
 
+
+rec_data = get_response()  # returns API Response in JSON format
+display_data(rec_data)  # Print out the data
