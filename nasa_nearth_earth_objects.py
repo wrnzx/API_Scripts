@@ -9,7 +9,7 @@ from datetime import date, timedelta
 def get_response():  # function to get and returns JSON response from NASA
 
     # API data
-    api_key = 'fSLlb6bffVRaYwWw80XHerQEm6FzHevc2WMgP3we'  # enter your API Key here. Available from: https://api.nasa.gov/
+    api_key = ''  # enter your API Key here. Available from: https://api.nasa.gov/
 
     api_url = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=' + date.today().strftime(
         '%Y-%m-%d') + '&api_key=' + api_key
