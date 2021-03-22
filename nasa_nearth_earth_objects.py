@@ -8,14 +8,15 @@ from datetime import date, timedelta
 
 def get_response():  # function to get and returns JSON response from NASA
 
-    # API data
-    api_key = ''  # enter your API Key here. Available from: https://api.nasa.gov/
+    api_url = 'https://api.nasa.gov/neo/rest/v1/feed'
+    
+    parameters = {
+        "start_date": str(date.today().strftime('%Y-%m-%d')),
+        "api_key": 'fSLlb6bffVRaYwWw80XHerQEm6FzHevc2WMgP3we'
+    }
 
-    api_url = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=' + date.today().strftime(
-        '%Y-%m-%d') + '&api_key=' + api_key
+    response = requests.get(api_url, params=parameters).json()
 
-    # API request
-    response = requests.get(api_url).json()
     return response
 
 
@@ -45,7 +46,7 @@ def display_data(data):
         add_date = add_date + timedelta(days=1)  # advance date by 1 to print next day in week
 
         # print out data
-        print('')
+        print()
         print('_____________________________________________________________DATA_BY_NASA_API_____')
         print('')
         print('Object Name:', neo_name)
