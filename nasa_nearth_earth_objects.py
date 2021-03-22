@@ -9,7 +9,7 @@ from datetime import date, timedelta
 def get_response():  # function to get and returns JSON response from NASA
 
     api_url = 'https://api.nasa.gov/neo/rest/v1/feed'
-    
+
     parameters = {
         "start_date": str(date.today().strftime('%Y-%m-%d')),
         "api_key": 'fSLlb6bffVRaYwWw80XHerQEm6FzHevc2WMgP3we'
@@ -22,11 +22,11 @@ def get_response():  # function to get and returns JSON response from NASA
 
 def display_data(data):
 
-    add_date = date.today()  # today's date to pass into path
+    add_date = date.today()  # i believe this is a hacky way to iterate through the dates. looking for fix.
 
-    for neo in data['near_earth_objects']:  # iterate through list of near earth objects
+    for neo in data['near_earth_objects']:  # iterate through list of near earth objects.
 
-        near_earth_object = data['near_earth_objects'][str(add_date)][0]  # location of first near earth object on specified day
+        near_earth_object = data['near_earth_objects'][str(add_date)][0]
 
         # naming and hazard info
         neo_id = near_earth_object['id']
