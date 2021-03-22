@@ -16,7 +16,6 @@ def get_response():  # function to get and returns JSON response from NASA
     }
 
     response = requests.get(api_url, params=parameters).json()
-
     return response
 
 
@@ -24,7 +23,7 @@ def display_data(data):
 
     for neo in data['near_earth_objects']:  # iterate through list of near earth objects.
 
-        near_earth_object = data['near_earth_objects'][str(neo)][0]
+        near_earth_object = data['near_earth_objects'][neo][0]
 
         # naming and hazard info
         neo_id = near_earth_object['id']
