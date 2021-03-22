@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import requests
 import math
-from datetime import date, timedelta
+from datetime import date
 # this script will only return one object for each day (can be changed with a loop to return all object per day)
 
 
@@ -22,11 +22,9 @@ def get_response():  # function to get and returns JSON response from NASA
 
 def display_data(data):
 
-    add_date = date.today()  # i believe this is a hacky way to iterate through the dates. looking for fix.
-
     for neo in data['near_earth_objects']:  # iterate through list of near earth objects.
 
-        near_earth_object = data['near_earth_objects'][str(add_date)][0]
+        near_earth_object = data['near_earth_objects'][str(neo)][0]
 
         # naming and hazard info
         neo_id = near_earth_object['id']
@@ -43,7 +41,6 @@ def display_data(data):
         estimated_diameter = round(near_earth_object['estimated_diameter']['feet']['estimated_diameter_max'])
         estimated_approach_date = near_earth_object['close_approach_data'][0]['close_approach_date_full']
         relative_velocity = float(near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
-        add_date = add_date + timedelta(days=1)  # advance date by 1 to print next day in week
 
         # print out data
         print()
