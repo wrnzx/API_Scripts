@@ -10,7 +10,7 @@ def get_response():  # function to get and returns JSON response from NASA
     api_url = 'https://api.nasa.gov/neo/rest/v1/feed'
     parameters = {
         "start_date": str(date.today().strftime('%Y-%m-%d')),
-        "api_key": 'fSLlb6bffVRaYwWw80XHerQEm6FzHevc2WMgP3we'
+        "api_key": ''
     }
     response = requests.get(api_url, params=parameters).json()
     return response
