@@ -7,26 +7,20 @@ from datetime import date
 
 
 def get_response():  # function to get and returns JSON response from NASA
-
     api_url = 'https://api.nasa.gov/neo/rest/v1/feed'
-
     parameters = {
         "start_date": str(date.today().strftime('%Y-%m-%d')),
         "api_key": 'fSLlb6bffVRaYwWw80XHerQEm6FzHevc2WMgP3we'
     }
-
     response = requests.get(api_url, params=parameters).json()
     return response
 
 
-def display_data(data):
-
+def prepare_for_display(data):
+    result_list = []
     for neo in data['near_earth_objects']:  # iterate through list of near earth objects.
-
         near_earth_object = data['near_earth_objects'][neo][0]
-
-        # naming and hazard info
-        neo_id = near_earth_object['id']
+        neo_id = near_earth_object['id']  # naming and hazard info
         neo_name = near_earth_object['name']
         jpl_url = near_earth_object['nasa_jpl_url']
 
@@ -41,18 +35,30 @@ def display_data(data):
         estimated_approach_date = near_earth_object['close_approach_data'][0]['close_approach_date_full']
         relative_velocity = float(near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
 
-        # print out data
-        print()
-        print('_____________________________________________________________DATA_BY_NASA_API_____')
-        print('')
-        print('Object Name:', neo_name)
-        print('Object ID:', neo_id)
-        print('Potentially hazardous?:', potential_hazard)
-        print('Estimated Diameter:', "{:,}".format(estimated_diameter), 'feet')
-        print('Estimated Approach Date and Time:', estimated_approach_date)
-        print('Relative Velocity is', "{:,}".format(math.floor(relative_velocity)), "Kilometers/Hour")
-        print('NASA Jet Propulsion Lab Url:', jpl_url)
-        print('__________________________________________________________________________________')
+        header = '_____________________________________________________________DATA_BY_NASA_API_____'
+        footer = '__________________________________________________________________________________'
+        object_name = 'Object Name: ' + neo_name
+        object_id = 'Object ID: ' + neo_id
+        pot_haz = 'Potentially hazardous?: ' + potential_hazard
+        est_diam = 'Estimated Diameter: ' + str("{:,}".format(estimated_diameter)) + 'feet'
+        est_app = 'Estimated Approach Date and Time: ' + estimated_approach_date
+        rel_vel = 'Relative Velocity is ' + str("{:,}".format(math.floor(relative_velocity))) + "Kilometers/Hour"
+        jpl_url = 'NASA Jet Propulsion Lab Url: ' + jpl_url
+
+        visualized = header + "\n" + \
+                "" + "\n" + \
+                object_name + "\n" + \
+                object_id + "\n" + \
+                pot_haz + "\n" + \
+                est_diam + "\n" + \
+                est_app + "\n" + \
+                rel_vel + "\n" + \
+                jpl_url + "\n"
+
+        result_list.append(visualized)
+    return result_list
 
 
-display_data(get_response())  # Print out the data
+neo_list = prepare_for_display(get_response())
+for n in neo_list:
+    print(n)
