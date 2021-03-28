@@ -3,6 +3,8 @@
 import requests
 import math
 from datetime import date
+
+
 # this script will only return one object for each day (can be changed with a loop to return all object per day)
 
 
@@ -33,7 +35,8 @@ def prepare_for_display(data):
         # estimated diameter and approach date
         estimated_diameter = round(near_earth_object['estimated_diameter']['feet']['estimated_diameter_max'])
         estimated_approach_date = near_earth_object['close_approach_data'][0]['close_approach_date_full']
-        relative_velocity = float(near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
+        relative_velocity = float(
+            near_earth_object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'])
 
         header = '_____________________________________________________________DATA_BY_NASA_API_____'
         footer = '__________________________________________________________________________________'
@@ -46,14 +49,14 @@ def prepare_for_display(data):
         jpl_url = 'NASA Jet Propulsion Lab Url: ' + jpl_url
 
         visualized = header + "\n" + \
-                "" + "\n" + \
-                object_name + "\n" + \
-                object_id + "\n" + \
-                pot_haz + "\n" + \
-                est_diam + "\n" + \
-                est_app + "\n" + \
-                rel_vel + "\n" + \
-                jpl_url + "\n"
+                     " " + "\n" + \
+                     object_name + "\n" + \
+                     object_id + "\n" + \
+                     pot_haz + "\n" + \
+                     est_diam + "\n" + \
+                     est_app + "\n" + \
+                     rel_vel + "\n" + \
+                     jpl_url + "\n"
 
         result_list.append(visualized)
     return result_list
